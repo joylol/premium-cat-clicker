@@ -7,8 +7,28 @@
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
-		<h1>Cute Cat Clicker</h1>
-		<h3>Show your love for cute cats. Click on the Cute Cat Photo to see the Clicker Count rise.</h3>
+		<div class="grid">
+			<div class="row">
+				<div class="col-12">
+					<h1>Premium Cat Clicker</h1>
+		        </div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-3">
+		    		<h2>Cute Cats</h2>
+		    	</div>
+		    	<div class="col-9">
+		    		<h3>Choose a cute cat on the left and see its photo below. Click on the Cute Cat Photo to see the Clicker Count rise.</h3>
+		    	</div>
+		    </div>
+		    <div class="row">
+		    	<div class="col-3" id="catList">
+		    	</div>
+		    	<div class="col-9" id="catClicker">
+		    	</div>
+		    </div>	
+		</div>
+
 		<script>
 			function Cat(name, image, counterID) {
 				this.name = name;
@@ -18,16 +38,16 @@
 					var h1 = document.createElement("H1");
 					var catName = document.createTextNode(this.name);
 					h1.appendChild(catName);
-					document.body.appendChild(h1);
+					document.getElementById("catClicker").appendChild(h1);
 					var newImg = document.createElement("IMG");
 					newImg.setAttribute("src", this.image);
 					newImg.setAttribute("id", this.name);
-					document.body.appendChild(newImg);
+					document.getElementById("catClicker").appendChild(newImg);
 					var h3 = document.createElement("H3");
 					var clickerCountStart = document.createTextNode("0");
 					h3.setAttribute("id", this.counterID);
 					h3.appendChild(clickerCountStart);
-					document.body.appendChild(h3);
+					document.getElementById("catClicker").appendChild(h3);
 				};
 				this.addNewCounter = function(){
 					var catImage = document.getElementById(this.name);
@@ -47,6 +67,8 @@
 			var funkat = new Cat('FunKat', 'cat2.jpg', 'cat2');
 			funkat.addNewCat();
 			funkat.addNewCounter();
+
+			
 		
 		</script>
 	</body>
