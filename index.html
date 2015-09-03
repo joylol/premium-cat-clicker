@@ -3,28 +3,25 @@
 	<head>
 		<meta charset="utf-8"
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Double Cat Clicker</title>
+		<title>Premium Cat Clicker</title>
 		<link rel="stylesheet" href="style.css">
 	</head>
 	<body>
 		<div class="grid">
 			<div class="row">
-				<div class="col-12">
+				<div class="col-12" id="header">
 					<h1>Premium Cat Clicker</h1>
 		        </div>
 		    </div>
 		    <div class="row">
-		    	<div class="col-3">
+		    	<div class="col-3" id="catList">
 		    		<h2>Cute Cats</h2>
 		    	</div>
-		    	<div class="col-9">
-		    		<h3>Choose a cute cat on the left and see its photo below. Click on the Cute Cat Photo to see the Clicker Count rise.</h3>
-		    	</div>
-		    </div>
-		    <div class="row">
-		    	<div class="col-3" id="catList">
-		    	</div>
 		    	<div class="col-9" id="catClicker">
+		    		<h3>Choose a cute cat on the left and see its photo below. Click on the Cute Cat Photo to see the Clicker Count rise.</h3>
+		    		<div id="selectedCatPhoto">
+		    			<h1>Waiting for a Cute Cat Photo...</h1>
+		    		</div>
 		    	</div>
 		    </div>	
 		</div>
@@ -34,42 +31,56 @@
 				this.name = name;
 				this.image = image;
 				this.counterID = counterID;
+				var clickerCount = 0;
+				this.addNameToCatList = function(){
+					var btn = document.createElement("Button");
+					btn.setAttribute("id", this.name + this.counterID);
+					var catListName = document.createTextNode(this.name);
+					btn.appendChild(catListName);
+					document.getElementById("catList").appendChild(btn);
+					this.clickCatNameButton();
+				};
 				this.addNewCat = function(){
 					var h1 = document.createElement("H1");
 					var catName = document.createTextNode(this.name);
 					h1.appendChild(catName);
-					document.getElementById("catClicker").appendChild(h1);
+					document.getElementById("selectedCatPhoto").appendChild(h1);
 					var newImg = document.createElement("IMG");
 					newImg.setAttribute("src", this.image);
 					newImg.setAttribute("id", this.name);
-					document.getElementById("catClicker").appendChild(newImg);
+					document.getElementById("selectedCatPhoto").appendChild(newImg);
 					var h3 = document.createElement("H3");
-					var clickerCountStart = document.createTextNode("0");
+					var clickerCountStart = document.createTextNode(clickerCount);
 					h3.setAttribute("id", this.counterID);
 					h3.appendChild(clickerCountStart);
-					document.getElementById("catClicker").appendChild(h3);
+					document.getElementById("selectedCatPhoto").appendChild(h3);
 				};
 				this.addNewCounter = function(){
 					var catImage = document.getElementById(this.name);
 					var catCounterID = this.counterID;
-					var clickerCount = 0;
 					catImage.addEventListener('click', function() {
-						clickerCount = clickerCount + 1;
+						clickerCount ++;
 						document.getElementById(catCounterID).innerHTML = clickerCount;
+						return clickerCount;
+					}, false);
+					return clickerCount;
+				};
+				this.clickCatNameButton = function(){
+					var nameButton = document.getElementById(this.name + this.counterID);
+					var self = this;
+					nameButton.addEventListener('click', function() {
+						document.getElementById('selectedCatPhoto').innerHTML = '';
+						self.addNewCat();
+						self.addNewCounter();
 					}, false);
 				};
 			}
 
 			var kitkat = new Cat('Kitkat', 'cat.jpg', 'cat1');
-			kitkat.addNewCat();
-			kitkat.addNewCounter();
-
-			var funkat = new Cat('FunKat', 'cat2.jpg', 'cat2');
-			funkat.addNewCat();
-			funkat.addNewCounter();
-
+			kitkat.addNameToCatList();
 			
-		
+			var funkat = new Cat('FunKat', 'cat2.jpg', 'cat2');
+			funkat.addNameToCatList();
 		</script>
 	</body>
 </html>
